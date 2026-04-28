@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:Integrasys.RouteManager.Helpers"
+             xmlns:viewModels="clr-namespace:Integrasys.RouteManager.ViewModels"
+             x:Class="Integrasys.RouteManager.Views.MainPage"
+             x:DataType="viewModels:MainPageViewModel"
+             Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False, IsEnabled=False}"
+             Shell.FlyoutBehavior="Disabled"
+             BackgroundColor="White">
+    <ContentPage.Resources>
+        <Color x:Key="BlueGradientHorizontal">#648AB6</Color>
+        <Color x:Key="BlueGradientVertical">#245792</Color>
+        
+        <LinearGradientBrush x:Key="HorizontalGradient"
+                             StartPoint="0,0"
+                             EndPoint="1,0">
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="{StaticResource BlueGradientHorizontal}" Offset="1"/>
+        </LinearGradientBrush>
+        
+        <LinearGradientBrush x:Key="VerticalGradient"
+                             StartPoint="0,0"
+                             EndPoint="0,1">
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="{StaticResource BlueGradientVertical}" Offset="1"/>
+        </LinearGradientBrush>
+    </ContentPage.Resources>
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*,*,*"
+              Padding="0,0,12,0"
+              BackgroundColor="{StaticResource BgBar}">
+            <Label Grid.Column="0"
+                   HorizontalTextAlignment="Start"
+                   VerticalTextAlignment="Center"
+                   Text="Admin"
+                   FontFamily="Bold"
+                   FontSize="18"
+                   TextColor="{StaticResource Primary}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AdminTapCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            
+            <Label Grid.Column="1"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Text="Login"
+                   FontFamily="XBold"
+                   FontSize="18"
+                   TextColor="Black"/>
+            
+            <Label Grid.Column="2"
+                   HorizontalTextAlignment="End"
+                   VerticalTextAlignment="Center"
+                   Text="Comms"
+                   FontFamily="Bold"
+                   FontSize="18"
+                   TextColor="{StaticResource Primary}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CommsTapCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+    </Shell.TitleView>
+
+    <ScrollView>
+        
+        <FlexLayout Direction="Column"
+                    VerticalOptions="Fill"
+                    Shrink="1"
+                    Grow="1">
+            
+            <VerticalStackLayout Padding="0"
+                                 VerticalOptions="Fill">
+                
+                <Label Text="DSD Route Manager"
+                       VerticalOptions="Start"
+                       HorizontalOptions="Center"
+                       FontFamily="Bold"
+                       FontSize="25"
+                       TextColor="#5D6A75"
+                       Padding="4"/>
+                
+                <Border Stroke="{StaticResource BorderGray}"
+                        StrokeThickness="1"
+                        Margin="32,0">
+                    
+                    <Grid RowDefinitions="*,1,*,1,*">
+                        
+                        <HorizontalStackLayout Grid.Row="0"
+                                               VerticalOptions="Center"
+                                               Padding="8,20"
+                                               Spacing="8">
+                            
+                            <Image VerticalOptions="Center">
+                                <Image.Source>
+                                    <FontImageSource FontFamily="MSFilled"
+                                                     Size="28"
+                                                     Color="{StaticResource Gray200}"
+                                                     Glyph="{x:Static helpers:MaterialSymbols.Person}"/>
+                                </Image.Source>
+                            </Image>
+                            
+                            <Entry Text="Kevin M."
+                                   FontFamily="MediumItalic"
+                                   TextColor="{StaticResource Gray200}"
+                                   FontSize="16"/>
+                            
+                        </HorizontalStackLayout>
+                        
+                        <BoxView Grid.Row="1"
+                                 HeightRequest="1"
+                                 Color="{StaticResource BorderGray}"/>
+                        
+                        <HorizontalStackLayout Grid.Row="2"
+                                               VerticalOptions="Center"
+                                               Padding="8,20"
+                                               Spacing="8">
+                            
+                            <Image>
+                                <Image.Source>
+                                    <FontImageSource FontFamily="MSFilled"
+                                                     Size="28"
+                                                     Color="{StaticResource Gray200}"
+                                                     Glyph="{x:Static helpers:MaterialSymbols.Key_vertical}"/>
+                                </Image.Source>
+                            </Image>
+                            
+                            <Entry Placeholder="Password"
+                                   FontFamily="MediumItalic"
+                                   TextColor="{StaticResource Gray200}"
+                                   FontSize="16"
+                                   IsPassword="True"/>
+                            
+                        </HorizontalStackLayout>
+                        
+                        <BoxView Grid.Row="3"
+                                 HeightRequest="1"
+                                 Color="{StaticResource BorderGray}"/>
+                        
+                        <HorizontalStackLayout Grid.Row="4"
+                                               VerticalOptions="Center"
+                                               Padding="8,20"
+                                               Spacing="8">
+                            
+                            <Image>
+                                <Image.Source>
+                                    <FontImageSource FontFamily="MSFilled"
+                                                     Size="28"
+                                                     Color="{StaticResource Gray200}"
+                                                     Glyph="{x:Static helpers:MaterialSymbols.Key_vertical}"/>
+                                </Image.Source>
+                            </Image>
+                            
+                            <Entry Placeholder="Mileage"
+                                   FontFamily="MediumItalic"
+                                   TextColor="{StaticResource Gray200}"
+                                   FontSize="16"/>
+                            
+                        </HorizontalStackLayout>
+                        
+                    </Grid>
+                    
+                </Border>
+                
+                <Label Text="Login"
+                       TextColor="{StaticResource Primary}"
+                       FontFamily="Bold"
+                       HorizontalOptions="Center"
+                       FontSize="20"
+                       Padding="8">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                
+                <Border StrokeThickness="0"
+                        Background="{StaticResource HorizontalGradient}"
+                        Padding="8">
+                
+                    <Label Text="Unable to determine last successful download. Route #"
+                           HorizontalOptions="End"
+                           HorizontalTextAlignment="End"
+                           VerticalTextAlignment="Center"
+                           LineBreakMode="CharacterWrap"
+                           WidthRequest="170"
+                           FontFamily="Medium"
+                           FontSize="14"
+                           TextColor="#415B6E"/>
+                
+                </Border>
+                
+            </VerticalStackLayout>
+            
+            <Grid FlexLayout.Grow="1" RowDefinitions="*,*,*"
+                  RowSpacing="24"
+                  Padding="40"
+                  VerticalOptions="Fill">
+                    
+                <Image Grid.Row="0"
+                       Source="integrasys_logo"
+                       HeightRequest="70"/>
+                    
+                <Image Grid.Row="1"
+                       Source="dsd"/>
+                    
+                <Label Grid.Row="2"
+                       Text="DSD Route Manager"
+                       VerticalTextAlignment="Center"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       FontFamily="Medium"
+                       FontSize="25"/>
+                    
+            </Grid>
+            
+            <Border VerticalOptions="End"
+                    StrokeThickness="0"
+                    Background="{StaticResource VerticalGradient}"
+                    Padding="14,6"
+                    HeightRequest="45">
+                
+                <Grid ColumnDefinitions="*,*">
+                    
+                    <Label Grid.Column="0"
+                           Text="Version 1.0"
+                           HorizontalOptions="Start"
+                           VerticalTextAlignment="End"
+                           FontFamily="Bold"
+                           FontSize="12"
+                           TextColor="#AAB5D3"/>
+                    
+                    <Label Grid.Column="1"
+                           Text="Powered by IntegraSys, Inc."
+                           HorizontalOptions="End"
+                           VerticalTextAlignment="End"
+                           FontFamily="Bold"
+                           FontSize="12"
+                           TextColor="#AAB5D3"/>
+                    
+                </Grid>
+                
+            </Border>
+            
+        </FlexLayout>
+        
+    </ScrollView>
+
+</ContentPage>

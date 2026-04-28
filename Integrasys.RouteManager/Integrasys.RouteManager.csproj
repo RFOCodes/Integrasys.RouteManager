@@ -14,10 +14,10 @@
       <MauiXamlInflator>SourceGen</MauiXamlInflator>
 
       <!-- Display name -->
-      <ApplicationTitle>Integrasys.RouteManager</ApplicationTitle>
+      <ApplicationTitle>DSD Route Manager</ApplicationTitle>
 
       <!-- App Identifier -->
-      <ApplicationId>com.companyname.integrasys.routemanager</ApplicationId>
+      <ApplicationId>com.integrasys.routemanager</ApplicationId>
 
       <!-- Versions -->
       <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -32,12 +32,16 @@
       <RuntimeIdentifier Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">android-arm64</RuntimeIdentifier>
    </PropertyGroup>
 
+   <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' AND '$(Configuration)' == 'Debug'">
+      <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+   </PropertyGroup>
+   
    <ItemGroup>
       <!-- App Icon -->
-      <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4"/>
-
+      <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.65"/>
+      
       <!-- Splash Screen -->
-      <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128"/>
+      <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#FFFFFF" />
 
       <!-- Images -->
       <MauiImage Include="Resources\Images\*"/>
@@ -51,8 +55,20 @@
    </ItemGroup>
 
    <ItemGroup>
-      <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
-      <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0"/>
+      <PackageReference Include="CommunityToolkit.Maui" Version="14.1.0" />
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+      <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.51" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.7" />
    </ItemGroup>
 
+   <ItemGroup Condition="$(TargetFramework.EndsWith('-android')) == false">
+      <Compile Remove="**\*.Android.cs"/>
+      <None Include="**\*.Android.cs" Exclude="$(DefaultItemExcludes),$(DefaultExcludesInProjectFolder)"/>
+   </ItemGroup>
+
+   <ItemGroup Condition="$(TargetFramework.EndsWith('-ios')) == false">
+      <Compile Remove="**\*.iOS.cs"/>
+      <None Include="**\*.iOS.cs" Exclude="$(DefaultItemExcludes),$(DefaultExcludesInProjectFolder)"/>
+   </ItemGroup>
+   
 </Project>

@@ -3,12 +3,14 @@
     x:Class="Integrasys.RouteManager.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Integrasys.RouteManager"
-    Title="Integrasys.RouteManager">
+    xmlns:views="clr-namespace:Integrasys.RouteManager.Views"
+    Title="DSD Route Manager"
+    FlyoutBehavior="Disabled"
+    BackgroundColor="{StaticResource BgBar}">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
+        ContentTemplate="{DataTemplate views:MainPage}"
         Route="MainPage" />
 
 </Shell>

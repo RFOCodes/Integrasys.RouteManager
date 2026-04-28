@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:helpers="clr-namespace:Integrasys.RouteManager.Helpers"
+             xmlns:converters="clr-namespace:Integrasys.RouteManager.Converters"
+             xmlns:viewModels="clr-namespace:Integrasys.RouteManager.ViewModels"
+             x:Class="Integrasys.RouteManager.Views.InventoryTransfer"
+             x:DataType="viewModels:InventoryTransferViewModel"
+             BackgroundColor="White"
+             Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}"
+             Title="Inventory Transfer">
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="auto,*,auto"
+              Padding="0,0,12,0"
+              BackgroundColor="{StaticResource BgBar}">
+            <HorizontalStackLayout Grid.Column="0"
+                                   HorizontalOptions="Start">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                </HorizontalStackLayout.GestureRecognizers>
+                
+                <Image>
+                    <Image.Source>
+                        <FontImageSource FontFamily="MSRegular"
+                                         Glyph="{x:Static helpers:MaterialSymbols.Arrow_back_ios}"
+                                         Color="{StaticResource Primary}"
+                                         Size="24"/>
+                    </Image.Source>
+                </Image>
+                
+                <Label HorizontalTextAlignment="Start"
+                       VerticalTextAlignment="Center"
+                       Text="Back"
+                       FontFamily="Bold"
+                       FontSize="16"
+                       TextColor="{StaticResource Primary}">
+                </Label>
+                
+            </HorizontalStackLayout>
+            
+            <Label Grid.Column="1"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   Text="{Binding Title, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                   FontFamily="XBold"
+                   FontSize="18"
+                   TextColor="Black"/>
+            
+            <ImageButton Grid.Column="2"
+                         HorizontalOptions="End"
+                         Command="{Binding ShareCommand}">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="MSRegular"
+                                     Color="{StaticResource Primary}"
+                                     Glyph="{x:Static helpers:MaterialSymbols.Ios_share}"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+    </Shell.TitleView>
+    
+    <ContentPage.Resources>
+        <Style x:Key="ButtonWithBorder" TargetType="Button" ApplyToDerivedTypes="True">
+            <Setter Property="BorderWidth" Value="2"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="FontFamily" Value="Bold"/>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+                                <Setter Property="BackgroundColor" Value="{StaticResource BgButton}"/>
+                                <Setter Property="BorderColor" Value="{StaticResource Primary}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="{StaticResource Gray200}"/>
+                                <Setter Property="BorderColor" Value="{StaticResource Gray100}"/>
+                                <Setter Property="BackgroundColor" Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver" />
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        
+        <converters:StockToColor x:Key="StockToColor"/>
+    </ContentPage.Resources>
+    
+    <Grid RowDefinitions="auto,*,auto">
+
+        <VerticalStackLayout Grid.Row="0">
+            
+            <Label Text="From Route #: 10 - ROUTE 10"
+                   HorizontalTextAlignment="Center"
+                   FontFamily="XBold"
+                   TextColor="{StaticResource Primary}"
+                   FontSize="16"
+                   Padding="0,8"/>
+            
+            <Border BackgroundColor="{StaticResource BgBox}"
+                    StrokeThickness="0"
+                    Padding="1">
+                
+                <Grid RowDefinitions="auto,*"
+                      ColumnDefinitions="*,100">
+                    
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           FontFamily="XBold"
+                           Text="Route # 999"
+                           FontSize="20"
+                           HorizontalTextAlignment="Center"/>
+                    
+                    <Button Grid.Row="0"
+                            Grid.Column="1"
+                            Grid.RowSpan="2"
+                            FontSize="28"
+                            FontAttributes="Bold"
+                            FontFamily="Regular"
+                            Margin="2"
+                            Text="{Binding Total}"
+                            Command="{Binding LargeButtonCommand}"
+                            Style="{StaticResource ButtonWithBorder}"/>
+                    
+                    <Border Grid.Row="1"
+                            Grid.Column="0"
+                            BackgroundColor="White"
+                            Margin="6,4"
+                            Padding="6,0"
+                            StrokeShape="RoundRectangle 12">
+
+                        <Grid RowDefinitions="*"
+                              ColumnDefinitions="auto,*">
+                        
+                            <Image Grid.Column="0">
+                                <Image.Source>
+                                    <FontImageSource FontFamily="MSRegular"
+                                                     Glyph="{x:Static helpers:MaterialSymbols.Search}"
+                                                     Color="#939393"/>
+                                </Image.Source>
+                            </Image>
+                            
+                            <Entry Grid.Column="1"
+                                   PlaceholderColor="#939393"
+                                   Placeholder="Search Items"
+                                   FontFamily="Regular"
+                                   FontSize="20"
+                                   Text="{Binding SearchText, UpdateSourceEventName=TextChanged}">
+                            </Entry>
+                            
+                        </Grid>
+                        
+                    </Border>
+                    
+                </Grid>
+                
+            </Border>
+            
+        </VerticalStackLayout>
+        
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Items}"
+                        Margin="0">
+
+            <CollectionView.ItemTemplate>
+                
+                <DataTemplate x:DataType="viewModels:InventoryTransferItemViewModel">
+                    
+                    <VerticalStackLayout HorizontalOptions="Fill"
+                                         Spacing="4">
+                        
+                        <Grid RowDefinitions="*,*,*,*,*"
+                              ColumnDefinitions="*,*,*,*"
+                              Padding="10,0"
+                              Margin="0"
+                              HorizontalOptions="Fill"
+                              ColumnSpacing="4">
+                            
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="4"
+                                   Text="{Binding Title}"
+                                   FontFamily="Medium"
+                                   FontSize="17"/>
+                            
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="{Binding Id}"
+                                   FontFamily="MediumItalic"
+                                   FontSize="16"/>
+                            
+                            <HorizontalStackLayout Grid.Row="2"
+                                                   Grid.Column="0"
+                                                   Grid.ColumnSpan="2"
+                                                   Spacing="26">
+                                
+                                <Label Text="{Binding Uc, StringFormat='U/C: {0}'}"
+                                       FontFamily="MediumItalic"
+                                       FontSize="16"/>
+                                
+                                <Label Text="{Binding Upc, StringFormat='UPC: {0}'}"
+                                       FontFamily="MediumItalic"
+                                       FontSize="16"/>
+                                
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Grid.Row="3"
+                                                   Grid.Column="0"
+                                                   Grid.ColumnSpan="2"
+                                                   Spacing="6">
+                                
+                                <Label Text="Current:"
+                                       FontFamily="MediumItalic"
+                                       FontSize="14"/>
+                                
+                                <Label Text="{Binding Stock}"
+                                       FontFamily="MediumItalic"
+                                       FontSize="14"
+                                       TextColor="{Binding Stock, Converter={StaticResource StockToColor}}"/>
+                                
+                            </HorizontalStackLayout>
+                            
+                            <Label Grid.Row="4"
+                                   Grid.Column="0"
+                                   Text="Cases:"
+                                   FontFamily="Medium"
+                                   FontSize="14"
+                                   HorizontalTextAlignment="End"
+                                   VerticalOptions="Center"/>
+                            
+                            <Border Grid.Row="4"
+                                    Grid.Column="1"
+                                    StrokeShape="RoundRectangle 6">
+                                
+                                <Entry Text="{Binding Cases, Mode=TwoWay, UpdateSourceEventName=TextChanged}"
+                                       FontFamily="Medium"
+                                       TextColor="{StaticResource BorderGray}"
+                                       FontSize="18"
+                                       Margin="4,0"
+                                       Keyboard="Numeric"
+                                       TextChanged="Cases_OnTextChanged">
+                                </Entry>
+                                
+                            </Border>
+                            
+                            <Button Grid.Column="2"
+                                    Grid.ColumnSpan="2"
+                                    Grid.Row="2"
+                                    Grid.RowSpan="3"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    Text="{Binding Cases}"
+                                    FontSize="18"
+                                    FontFamily="Medium"
+                                    Padding="40,10"
+                                    BorderWidth="4"
+                                    Command="{Binding ItemActionCommand}"
+                                    Style="{StaticResource ButtonWithBorder}"/>
+                            
+                        </Grid>
+                        
+                        <BoxView HorizontalOptions="Fill"
+                                 BackgroundColor="{StaticResource BorderGray}"
+                                 HeightRequest="1"/>
+                        
+                    </VerticalStackLayout>
+                    
+                </DataTemplate>
+                
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+        
+        <VerticalStackLayout Grid.Row="2"
+                             BackgroundColor="{StaticResource BgBar}">
+            
+            <BoxView HorizontalOptions="Fill"
+                     BackgroundColor="{StaticResource BorderGray}"
+                     HeightRequest="1"/>
+            
+            <Grid RowDefinitions="1,*"
+                  ColumnDefinitions="*,*"
+                  Padding="20,0">
+            
+                <ImageButton Grid.Column="0"
+                             Grid.Row="1"
+                             HorizontalOptions="Start"
+                             Command="{Binding BarcodeScanCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MSRegular"
+                                         Glyph="{x:Static helpers:MaterialSymbols.Barcode_scanner}"
+                                         Size="48"
+                                         Color="{StaticResource Primary}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                
+                <ImageButton Grid.Column="1"
+                             Grid.Row="1"
+                             HorizontalOptions="End"
+                             Command="{Binding AddItemCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="MSRegular"
+                                         Glyph="{x:Static helpers:MaterialSymbols.Add}"
+                                         Size="48"
+                                         Color="{StaticResource Primary}"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            
+            </Grid>
+            
+        </VerticalStackLayout>
+        
+    </Grid>
+    
+</ContentPage>
